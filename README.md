@@ -2,12 +2,12 @@
 Temporary repository for the 2020 course of Compressible Fluid Dynamics
 ## 
 0. [Oblique Shock](OBLIQUE_SHOCK)
-1. [SUpersonic Flow Past Diamond Airfoil](DIAMOND)
-2. [Laminar and Turbulent Boundary Layer Over Flat Place](FLAT_PLATE)
+1. [Supersonic Flow Past Diamond Airfoil](DIAMOND)
+2. [Laminar and Turbulent Boundary Layer Over Flat Plate](FLAT_PLATE)
 
 
 ## SOFTWARE
-This course will make use of the LGPL CFD code [SU2](https://su2code.github.io). For build instructions plis visit [this section of the SU2 website](https://su2code.github.io/docs_v7/Build-SU2-Linux-MacOS/).
+This course will make use of the LGPL CFD code [SU2](https://su2code.github.io). For build instructions please visit [this section of the SU2 website](https://su2code.github.io/docs_v7/Build-SU2-Linux-MacOS/).
 
 ## LAB REPORT
 Overleaf template of the report to compile for each test case 
