@@ -29,8 +29,8 @@ end
 figure;
 plot(f(2,:),eta);
 title("Blasius profile")
-xlabel('\eta')
-ylabel("u/U")
+ylabel('\eta')
+xlabel("u/U")
 
 %% FUNCTIONS
 
