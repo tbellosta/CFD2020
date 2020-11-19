@@ -3,7 +3,7 @@
 R = 100;
 L = 1;
 D = 0.3;
-h = 0.03;
+h = 0.05;
 H = 5;
 
 
@@ -48,3 +48,6 @@ Plane Surface(1) = {1,2};
 Physical Surface("Volume") = {1};
 Physical Line("FARFIELD") = {1,2,3,4};
 Physical Line("AIRFOIL") = {5,6,7,8};
+
+//Mesh.RandomFactor = 1e-12;
+//Mesh.Algorithm = 1;
