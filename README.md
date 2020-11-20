@@ -14,8 +14,9 @@ Overleaf template of the report to compile for each test case
 [https://www.overleaf.com/read/wnxwcvpqryvp](https://www.overleaf.com/read/wnxwcvpqryvp)
 
 ## USEFUL LINKS
-- [Linux cheat sheet](Linux_cheat_sheet.pdf)
-- Mesh Spacing Tool. [Credits and explanation](https://www.cfd-online.com/Forums/openfoam-meshing/61785-blockmesh-grading-calculator.html), [source](MeshSpace.zip)
+- [Linux cheat sheet](utils/Linux_cheat_sheet.pdf)
+- Mesh Spacing Tool. [Credits and explanation](https://www.cfd-online.com/Forums/openfoam-meshing/61785-blockmesh-grading-calculator.html), [source](utils/MeshSpace.zip)
+- [Airfoil printer for gmsh](utils/printGeo)
 
 ## LECTURES RECORDINGS
 - [CFD Lab 1.12 - Bellosta - Computational Fluid Dynamics](https://politecnicomilano.webex.com/recordingservice/sites/politecnicomilano/recording/playback/2d2414bf22da4254a62d96b5c5bd9668)
