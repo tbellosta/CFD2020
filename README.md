@@ -33,3 +33,4 @@ Overleaf template of the report to compile for each test case
 - [CFD Lab 6.2 - Bellosta - Computational Fluid Dynamics](https://politecnicomilano.webex.com/recordingservice/sites/politecnicomilano/recording/playback/cfbeafae5dfc42fe80899d1d37c91b39)
 - [CFD Lab 7.1 - Bellosta - Computational Fluid Dynamics](https://politecnicomilano.webex.com/recordingservice/sites/politecnicomilano/recording/playback/8b44b7e0e4754d609fcc061e8aadf816)
 - [CFD Lab 7.2 - Bellosta - Computational Fluid Dynamics](https://politecnicomilano.webex.com/recordingservice/sites/politecnicomilano/recording/playback/9b50fe6f37d746c985dc6821a4fce968)
+- [CFD Lab 8.12 - Bellosta - Computational Fluid Dynamics](https://politecnicomilano.webex.com/politecnicomilano/ldr.php?RCID=55d199b5aad04d7d9d5c06f7b8d68a44)
