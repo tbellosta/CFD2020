@@ -4,6 +4,7 @@ Temporary repository for the 2020 course of Compressible Fluid Dynamics
 0. [Oblique Shock](OBLIQUE_SHOCK)
 1. [Supersonic Flow Past Diamond Airfoil](DIAMOND)
 2. [Laminar and Turbulent Boundary Layer Over Flat Plate](FLAT_PLATE)
+3. [Pitching inviscid airfoil](PITCHING)
 
 
 ## SOFTWARE
