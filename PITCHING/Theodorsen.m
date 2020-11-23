@@ -47,7 +47,7 @@ CL_mod = 2*pi*alpha0 + pi*b*(p1*alpha1*edot/V - p2*(b*a/V^2)*alpha1*edotdot) + .
 
 % plot analytic solution
 figure;
-alpha = alpha0 + alpha1*e;
+alpha = rad2deg(alpha0 + alpha1*e);
 plot(alpha,CL,'k',alpha,CL_mod,'r','linew',1.3);
 
 %% numerical data
@@ -58,7 +58,7 @@ T = readtable(file);
 dt = 0.0023555025613149587;  % time step used in numerical simulation
 
 tt = (T.Time_Iter)*dt;       % time discretization
-aa = deg2rad(2*(sin(omega*tt))); % angle of attack of nuerical data
+aa = 2*(sin(omega*tt)); % angle of attack of nuerical data
 
 
 hold on; box on; grid on;
