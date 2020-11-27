@@ -16,6 +16,7 @@ Overleaf template of the report to compile for each test case
 [https://www.overleaf.com/read/wnxwcvpqryvp](https://www.overleaf.com/read/wnxwcvpqryvp)
 
 ## USEFUL LINKS
+- [SU2 presentation paper](utils/SU2_AIAA2016.pdf)
 - [Linux cheat sheet](utils/Linux_cheat_sheet.pdf)
 - Mesh Spacing Tool. [Credits and explanation](https://www.cfd-online.com/Forums/openfoam-meshing/61785-blockmesh-grading-calculator.html), [source](utils/MeshSpace.zip)
 - [Airfoil printer for gmsh](utils/printGeo)
@@ -36,3 +37,4 @@ Overleaf template of the report to compile for each test case
 - [CFD Lab 7.2 - Bellosta - Computational Fluid Dynamics](https://politecnicomilano.webex.com/recordingservice/sites/politecnicomilano/recording/playback/9b50fe6f37d746c985dc6821a4fce968)
 - [CFD Lab 8.12 - Bellosta - Computational Fluid Dynamics](https://politecnicomilano.webex.com/politecnicomilano/ldr.php?RCID=55d199b5aad04d7d9d5c06f7b8d68a44)
 - [CFD Lab 9.12 - Bellosta - Computational Fluid Dynamics](https://politecnicomilano.webex.com/politecnicomilano/ldr.php?RCID=d5d3f5ad9d3340a290816bdbae0e7f82)
+- [CFD Lab 10.12 - Bellosta - Computational Fluid Dynamics](https://politecnicomilano.webex.com/politecnicomilano/ldr.php?RCID=44c951b35f0f4139b1d0763df85e81fb)
