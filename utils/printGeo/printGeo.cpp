@@ -10,6 +10,7 @@ private:
     int nPoints;
     double **coordinates;
     int LEid, UPid, LOid, blunt;
+    bool isProfile;
 public:
     string fileName;
     double LEspacing,TEspacing;
@@ -29,11 +30,26 @@ public:
         cin >> fileName;
         cout << endl;
 
-        cout << "Enter leading edge spacing:\t ";
+        string tmp;
+        cout << "Enter case type (nozzle, profile):\t ";
+        cin >> tmp;
+        cout << endl;
+
+
+        if (tmp == "nozzle") isProfile = false;
+        else if (tmp == "profile") isProfile = true;
+        else {
+            cout << "\n\n[ERROR] case type must be nozzle or profile.\n\n";
+            exit(EXIT_FAILURE);
+        }
+
+
+
+        cout << "Enter inlet/leading edge spacing:\t ";
         cin >> LEspacing;
         cout << endl;
 
-        cout << "Enter trailing edge spacing:\t ";
+        cout << "Enter outlet/trailing edge spacing:\t ";
         cin >> TEspacing;
         cout << endl;
 
@@ -69,36 +85,49 @@ public:
         int id = -1;
         double val = 1e7;
 
-        /** find LE as point with smallest x coordinate **/
-        for (int iPoint = 0; iPoint < nPoints; ++iPoint) {
-            if (coordinates[iPoint][0] < val) {
-                val = coordinates[iPoint][0];
-                id = iPoint;
-            }
-        }
-        LEid = id;
 
-        /** find UP **/
-        double UPval = 0.5 * (coordinates[0][0] + coordinates[LEid][0]);
-        val = 1e7;
-        for (int iPoint = 0; iPoint < nPoints/2; ++iPoint) {
-            if (fabs(coordinates[iPoint][0] - UPval) < val) {
-                val = fabs(coordinates[iPoint][0] - UPval);
-                id = iPoint;
+        if (isProfile) {
+            /** find LE as point with smallest x coordinate **/
+            for (int iPoint = 0; iPoint < nPoints; ++iPoint) {
+                if (coordinates[iPoint][0] < val) {
+                    val = coordinates[iPoint][0];
+                    id = iPoint;
+                }
             }
-        }
-        UPid = id;
+            LEid = id;
 
-        /** find LO **/
-        double LOval = 0.5 * (coordinates[0][0] + coordinates[LEid][0]);
-        val = 1e7;
-        for (int iPoint = int(nPoints/2); iPoint < nPoints; ++iPoint) {
-            if (fabs(coordinates[iPoint][0] - LOval) < val) {
-                val = fabs(coordinates[iPoint][0] - LOval);
-                id = iPoint;
+            /** find UP **/
+            double UPval = 0.5 * (coordinates[0][0] + coordinates[LEid][0]);
+            val = 1e7;
+            for (int iPoint = 0; iPoint < nPoints / 2; ++iPoint) {
+                if (fabs(coordinates[iPoint][0] - UPval) < val) {
+                    val = fabs(coordinates[iPoint][0] - UPval);
+                    id = iPoint;
+                }
             }
+            UPid = id;
+
+            /** find LO **/
+            double LOval = 0.5 * (coordinates[0][0] + coordinates[LEid][0]);
+            val = 1e7;
+            for (int iPoint = int(nPoints / 2); iPoint < nPoints; ++iPoint) {
+                if (fabs(coordinates[iPoint][0] - LOval) < val) {
+                    val = fabs(coordinates[iPoint][0] - LOval);
+                    id = iPoint;
+                }
+            }
+            LOid = id;
         }
-        LOid = id;
+        else {
+            /** find throat as point with smallest y coordinate **/
+            for (int iPoint = 0; iPoint < nPoints; ++iPoint) {
+                if (coordinates[iPoint][1] < val) {
+                    val = coordinates[iPoint][1];
+                    id = iPoint;
+                }
+            }
+            LEid = id;
+        }
 
     }
 
@@ -132,28 +161,42 @@ public:
         /** build size field **/
         vector<double> h(nPoints,1);
 
-        /** from TE to UP **/
-        double m = (1 - TEspacing) / (s[UPid] - s[0]);
-        for (int iPoint = 0; iPoint < UPid; ++iPoint) {
-            h[iPoint] = m * (s[iPoint] - s[0]) + TEspacing;
-        }
+        if (isProfile) {
+            /** from TE to UP **/
+            double m = (1 - TEspacing) / (s[UPid] - s[0]);
+            for (int iPoint = 0; iPoint < UPid; ++iPoint) {
+                h[iPoint] = m * (s[iPoint] - s[0]) + TEspacing;
+            }
 
-        /** from UP to LE **/
-        m = (LEspacing - 1) / (s[LEid] - s[UPid]);
-        for (int iPoint = UPid+1; iPoint <= LEid; ++iPoint) {
-            h[iPoint] = m * (s[iPoint] - s[UPid]) + 1;
-        }
+            /** from UP to LE **/
+            m = (LEspacing - 1) / (s[LEid] - s[UPid]);
+            for (int iPoint = UPid + 1; iPoint <= LEid; ++iPoint) {
+                h[iPoint] = m * (s[iPoint] - s[UPid]) + 1;
+            }
 
-        /** from LE to LO **/
-        m = (1 - LEspacing) / (s[LOid] - s[LEid]);
-        for (int iPoint = LEid+1; iPoint < LOid; ++iPoint) {
-            h[iPoint] = m * (s[iPoint] - s[LEid]) + LEspacing;
-        }
+            /** from LE to LO **/
+            m = (1 - LEspacing) / (s[LOid] - s[LEid]);
+            for (int iPoint = LEid + 1; iPoint < LOid; ++iPoint) {
+                h[iPoint] = m * (s[iPoint] - s[LEid]) + LEspacing;
+            }
 
-        /** from LO to TE **/
-        m = (TEspacing - 1) / (s[nPoints-1] - s[LOid]);
-        for (int iPoint = LOid+1; iPoint < nPoints; ++iPoint) {
-            h[iPoint] = m * (s[iPoint] - s[LOid]) + 1;
+            /** from LO to TE **/
+            m = (TEspacing - 1) / (s[nPoints - 1] - s[LOid]);
+            for (int iPoint = LOid + 1; iPoint < nPoints; ++iPoint) {
+                h[iPoint] = m * (s[iPoint] - s[LOid]) + 1;
+            }
+        } else {
+            /** from start to throat **/
+            double m = (1 - LEspacing) / (s[LEid] - s[0]);
+            for (int iPoint = 0; iPoint < LEid; ++iPoint) {
+                h[iPoint] = m * (s[iPoint] - s[0]) + LEspacing;
+            }
+
+            /** from throat to end **/
+            m = (TEspacing - 1) / (s[nPoints-1] - s[LEid]);
+            for (int iPoint = LEid + 1; iPoint < nPoints; ++iPoint) {
+                h[iPoint] = m * (s[iPoint] - s[LEid]) + 1;
+            }
         }
 
         ofstream output("mesh.geo");
@@ -163,9 +206,11 @@ public:
             output << "// ===========================================\n";
             output << "// ==================================MESH FILE\n";
             output << "// ===========================================\n\n";
-            output << "h = ;\n";
-            output << "H = ;\n";
-            output << "R = ;\n\n";
+            output << "h = 0.0005;\n";
+            if (isProfile) {
+                output << "H = 1;\n";
+                output << "R = 10;\n\n";
+            }
             output << "// =====================================POINTS\n";
 
             for (int iPoint = 0; iPoint < nPoints; iPoint++) {
@@ -174,46 +219,81 @@ public:
                        << ", " << coordinates[iPoint][1] << ", 0.0, " << h[iPoint] <<"*h};\n";
             }
 
-            output << "\n // farfield\n";
-            output << "Point(" << nPoints+2 << ") = {0, 0, 0, H};\n";
-            output << "Point(" << nPoints+3 << ") = {R, 0, 0, H};\n";
-            output << "Point(" << nPoints+4 << ") = {0, R, 0, H};\n";
-            output << "Point(" << nPoints+5 << ") = {-R, 0, 0, H};\n";
-            output << "Point(" << nPoints+6 << ") = {0, -R, 0, H};\n";
+            if (isProfile) {
 
-            output << "\n\n// =====================================CURVES\n\n";
+                output << "\n // farfield\n";
+                output << "Point(" << nPoints + 2 << ") = {0, 0, 0, H};\n";
+                output << "Point(" << nPoints + 3 << ") = {R, 0, 0, H};\n";
+                output << "Point(" << nPoints + 4 << ") = {0, R, 0, H};\n";
+                output << "Point(" << nPoints + 5 << ") = {-R, 0, 0, H};\n";
+                output << "Point(" << nPoints + 6 << ") = {0, -R, 0, H};\n";
 
-            output << "Spline(1) = {1:" << UPid+1 << "};\n";
-            output << "Spline(2) = {"<< UPid+1 << ":" << LEid+1 << "};\n";
-            output << "Spline(3) = {"<< LEid+1 << ":" << LOid+1 << "};\n";
-            output << "Spline(4) = {"<< LOid+1 << ":" << nPoints << "};\n";
+                output << "\n\n// =====================================CURVES\n\n";
 
-            if (bluntTE)
-                output << "Line(9) = {"<< nPoints << ",1};\n";
+                output << "Spline(1) = {1:" << UPid + 1 << "};\n";
+                output << "Spline(2) = {" << UPid + 1 << ":" << LEid + 1 << "};\n";
+                output << "Spline(3) = {" << LEid + 1 << ":" << LOid + 1 << "};\n";
+                output << "Spline(4) = {" << LOid + 1 << ":" << nPoints << "};\n";
 
-            output << "\n // farfield\n";
-            output << "Circle(5) = {" << nPoints+3 << "," << nPoints+2 << "," << nPoints+4 << "};\n";
-            output << "Circle(6) = {" << nPoints+4 << "," << nPoints+2 << "," << nPoints+5 << "};\n";
-            output << "Circle(7) = {" << nPoints+5 << "," << nPoints+2 << "," << nPoints+6 << "};\n";
-            output << "Circle(8) = {" << nPoints+6 << "," << nPoints+2 << "," << nPoints+3 << "};\n";
+                if (bluntTE)
+                    output << "Line(9) = {" << nPoints << ",1};\n";
 
-            output << "\n\n// =====================================LOOPS\n\n";
-            if (bluntTE)
-                output << "Line Loop(1) = {1,2,3,4,9};\n";
-            else
-                output << "Line Loop(1) = {1,2,3,4};\n";
+                output << "\n // farfield\n";
+                output << "Circle(5) = {" << nPoints + 3 << "," << nPoints + 2 << "," << nPoints + 4 << "};\n";
+                output << "Circle(6) = {" << nPoints + 4 << "," << nPoints + 2 << "," << nPoints + 5 << "};\n";
+                output << "Circle(7) = {" << nPoints + 5 << "," << nPoints + 2 << "," << nPoints + 6 << "};\n";
+                output << "Circle(8) = {" << nPoints + 6 << "," << nPoints + 2 << "," << nPoints + 3 << "};\n";
 
-            output << "Line Loop(2) = {-8,-7,-6,-5};\n";
+                output << "\n\n// =====================================LOOPS\n\n";
+                if (bluntTE)
+                    output << "Line Loop(1) = {1,2,3,4,9};\n";
+                else
+                    output << "Line Loop(1) = {1,2,3,4};\n";
 
-            output << "\n\n// =====================================SURFS\n\n";
-            output << "Plane Surface(1) = {1,2};\n\n";
+                output << "Line Loop(2) = {-8,-7,-6,-5};\n";
 
-            output << "Physical Surface(1) = {1};\n";
-            output << "Physical Line(\"FARFIELD\") = {5,6,7,8};\n";
-            if (bluntTE)
-                output << "Physical Line(\"AIRFOIL\") = {1,2,3,4,9};\n";
-            else
-                output << "Physical Line(\"AIRFOIL\") = {1,2,3,4};\n";
+                output << "\n\n// =====================================SURFS\n\n";
+                output << "Plane Surface(1) = {1,2};\n\n";
+
+                output << "Physical Surface(1) = {1};\n";
+                output << "Physical Line(\"FARFIELD\") = {5,6,7,8};\n";
+                if (bluntTE)
+                    output << "Physical Line(\"AIRFOIL\") = {1,2,3,4,9};\n";
+                else
+                    output << "Physical Line(\"AIRFOIL\") = {1,2,3,4};\n";
+            } else {
+
+                output << "\n // symmetry\n";
+                output << "Point(" << nPoints+2 << ") = {" << coordinates[0][0] << ", 0, 0, " << LEspacing << "*h};\n";
+                output << "Point(" << nPoints+3 << ") = {" << coordinates[LEid][0] << ", 0, 0, " << 1 << "*h};\n";
+                output << "Point(" << nPoints+4 << ") = {" << coordinates[nPoints-1][0] << ", 0, 0, " << TEspacing << "*h};\n";;
+
+
+                output << "\n\n// =====================================CURVES\n\n";
+
+                output << "Spline(1) = {1:" << LEid+1 << "};\n";
+                output << "Spline(2) = {"<< LEid+1 << ":" << nPoints << "};\n";
+
+                output << "Line(3) = {" << nPoints+2 << ", " << nPoints+3 << "};\n";
+                output << "Line(4) = {" << nPoints+3 << ", " << nPoints+4 << "};\n";
+                output << "Line(5) = {" << nPoints+2 << ", " << 1 << "};\n";
+                output << "Line(6) = {" << nPoints+4 << ", " << nPoints << "};\n";
+
+                output << "\n\n// =====================================LOOPS\n\n";
+
+                output << "Line Loop(1) = {1, 2, -6, -3, -4, 5};\n";
+
+                output << "\n\n// =====================================SURFS\n\n";
+                output << "Plane Surface(1) = {1};\n\n";
+
+                output << "Physical Surface(1) = {1};\n";
+                output << "Physical Line(\"WALL\") = {1,2};\n";
+                output << "Physical Line(\"INLET\") = {5};\n";
+                output << "Physical Line(\"OUTLET\") = {6};\n";
+                output << "Physical Line(\"SYMMETRY\") = {3,4};\n";
+
+
+            }
 
             output << "\n\n// 1: MeshAdapt, 2: Automatic, 3: Initial mesh only, 5: Delaunay, 6: Frontal-Delaunay, "
                       "7: BAMG, 8: Frontal-Delaunay for Quads, 9: Packing of Parallelograms\n";
