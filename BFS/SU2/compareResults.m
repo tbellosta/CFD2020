@@ -146,35 +146,30 @@ EXP1 = EXP(EXP1i,:);
 [~,s] = sort(EXP1(:,2));
 EXP1 = EXP1(s,:);
 
-EXP1(:,1) = (EXP1(:,1)-2)*(10.5/9.39) + 2;
 
 EXP2i = find(EXP(:,1)>4.5 & EXP(:,1)<6.92);
 EXP2 = EXP(EXP2i,:);
 [~,s] = sort(EXP2(:,2));
 EXP2 = EXP2(s,:);
 
-EXP2(:,1) = (EXP2(:,1)-5)*(10.5/9.39) + 5;
 
 EXP3i = find(EXP(:,1)>6.92 & EXP(:,1)<8.9);
 EXP3 = EXP(EXP3i,:);
 [~,s] = sort(EXP3(:,2));
 EXP3 = EXP3(s,:);
 
-EXP3(:,1) = (EXP3(:,1)-7)*(10.5/9.39) + 7;
 
 EXP4i = find(EXP(:,1)>8.9 & EXP(:,1)<11.9);
 EXP4 = EXP(EXP4i,:);
 [~,s] = sort(EXP4(:,2));
 EXP4 = EXP4(s,:);
 
-EXP4(:,1) = (EXP4(:,1)-9)*(10.5/9.39) + 9;
 
 EXP5i = find(EXP(:,1)>11.9);
 EXP5 = EXP(EXP5i,:);
 [~,s] = sort(EXP5(:,2));
 EXP5 = EXP5(s,:);
 
-EXP5(:,1) = (EXP5(:,1)-12)*(10.5/9.39) + 12;
 
 %%
 figure;
@@ -188,7 +183,7 @@ u0 = 10.5;
 h = 0.04;
 H = 0.0267;
 
-T = readtable("CFD/data/two.csv");
+T = readtable("CFD/data3/two.csv");
 v = 2;
 subplot(2,1,1); p2=plot(2.*T.Velocity_0./(u0)+v,T.Points_1./H + 1,'linew',1,'color',[0.9290    0.6940    0.1250]); hold on;
 subplot(2,1,1); plot([v,v],[0,2.5],'k','linew',0.5);
@@ -197,28 +192,28 @@ subplot(2,1,2); p4=plot(10.*(2/3 * T.Turb_Kin_Energy).^(1/4) ./(u0)+v,T.Points_1
 subplot(2,1,2); plot([v,v],[0,2.5],'k','linew',0.5);
 axis([-2,15,0,2.5]);
 
-T = readtable("CFD/data/five.csv");
+T = readtable("CFD/data3/five.csv");
 v = 5;
 subplot(2,1,1); plot(2.*T.Velocity_0./(u0)+v,T.Points_1./H + 1,'linew',1,'color',[0.9290    0.6940    0.1250]); hold on;
 subplot(2,1,1); plot([v,v],[0,2.5],'k','linew',0.5);
 subplot(2,1,2); plot(10.*(2/3 * T.Turb_Kin_Energy).^(1/4) ./(u0)+v,T.Points_1./H + 1,'linew',1,'color',[0.9290    0.6940    0.1250]); hold on;
 subplot(2,1,2); plot([v,v],[0,2.5],'k','linew',0.5);
 
-T = readtable("CFD/data/seven.csv");
+T = readtable("CFD/data3/seven.csv");
 v = 7;
 subplot(2,1,1); plot(2.*T.Velocity_0./(u0)+v,T.Points_1./H + 1,'linew',1,'color',[0.9290    0.6940    0.1250]); hold on;
 subplot(2,1,1); plot([v,v],[0,2.5],'k','linew',0.5);
 subplot(2,1,2); plot(10.*(2/3 * T.Turb_Kin_Energy).^(1/4) ./(u0)+v,T.Points_1./H + 1,'linew',1,'color',[0.9290    0.6940    0.1250]); hold on;
 subplot(2,1,2); plot([v,v],[0,2.5],'k','linew',0.5);
 
-T = readtable("CFD/data/nine.csv");
+T = readtable("CFD/data3/nine.csv");
 v = 9;
 subplot(2,1,1); plot(2.*T.Velocity_0./(u0)+v,T.Points_1./H + 1,'linew',1,'color',[0.9290    0.6940    0.1250]); hold on;
 subplot(2,1,1); plot([v,v],[0,2.5],'k','linew',0.5);
 subplot(2,1,2); plot(10.*(2/3 * T.Turb_Kin_Energy).^(1/4) ./(u0)+v,T.Points_1./H + 1,'linew',1,'color',[0.9290    0.6940    0.1250]); hold on;
 subplot(2,1,2); plot([v,v],[0,2.5],'k','linew',0.5);
 
-T = readtable("CFD/data/twelve.csv");
+T = readtable("CFD/data3/twelve.csv");
 v = 12;
 subplot(2,1,1); plot(2.*T.Velocity_0./(u0)+v,T.Points_1./H + 1,'linew',1,'color',[0.9290    0.6940    0.1250]); hold on;
 subplot(2,1,1); plot([v,v],[0,2.5],'k','linew',0.5);
@@ -537,35 +532,30 @@ EXP1 = EXPk(EXP1i,:);
 [~,s] = sort(EXP1(:,2));
 EXP1 = EXP1(s,:);
 
-% EXP1(:,1) = (EXP1(:,1)-2)*(10.5/9.39) + 2;
 
 EXP2i = find(EXPk(:,1)>4.5 & EXPk(:,1)<7);
 EXP2 = EXPk(EXP2i,:);
 [~,s] = sort(EXP2(:,2));
 EXP2 = EXP2(s,:);
 
-% EXP2(:,1) = (EXP2(:,1)-5)*(10.5/9.39) + 5;
 
 EXP3i = find(EXPk(:,1)>7 & EXPk(:,1)<8.9);
 EXP3 = EXPk(EXP3i,:);
 [~,s] = sort(EXP3(:,2));
 EXP3 = EXP3(s,:);
 
-% EXP3(:,1) = (EXP3(:,1)-7)*(10.5/9.39) + 7;
 
 EXP4i = find(EXPk(:,1)>8.9 & EXPk(:,1)<11.9);
 EXP4 = EXPk(EXP4i,:);
 [~,s] = sort(EXP4(:,2));
 EXP4 = EXP4(s,:);
 
-% EXP4(:,1) = (EXP4(:,1)-9)*(10.5/9.39) + 9;
 
 EXP5i = find(EXPk(:,1)>11.9);
 EXP5 = EXPk(EXP5i,:);
 [~,s] = sort(EXP5(:,2));
 EXP5 = EXP5(s,:);
 
-% EXP5(:,1) = (EXP5(:,1)-12)*(10.5/9.39) + 12;
 
 %%
 
