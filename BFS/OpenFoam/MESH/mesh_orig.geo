@@ -1,5 +1,5 @@
 // BACKWARD FACING STEP
-// PASSES CHECKMESH
+// SAME AS SU2
 h = 0.04;
 H = 0.0267;
 L = 35*h;
@@ -26,15 +26,15 @@ Line(8) = {8,1};
 Line(9) = {4,1};
 Line(10) = {6,1};
 
-nPc = 200;
+nPc = 100;
 nPh = 70;
 nPH = 70;
-nPs = 300;
+nPs = 200;
 
-pc = 1.03429;
+pc = 1.07791;
 bh = 0.02;
 bH = 0.04;
-ps = 1.02328;
+ps = 1.03707;
 
 // CHANNEL BLOCK
 
@@ -71,8 +71,6 @@ Line Loop(3) = {4,5,10,-9};
 Plane Surface(3) = {3};
 Transfinite Surface{3};
 
-Recombine Surface{1,2,3};
-
 // EXTRUSION
 
 vect1 = Extrude {0, 0, 0.01} {
@@ -93,6 +91,7 @@ vect3 = Extrude {0, 0, 0.01} {
  Recombine;
 };
 
+Recombine Surface{1,2,3};
 Physical Volume("VOLUME") = {vect1[1], vect2[1], vect3[1]};
 Physical Surface("FRONT") = {vect1[0], vect2[0], vect3[0]};
 Physical Surface("BACK") = {1,2,3};
@@ -102,13 +101,3 @@ Physical Surface("WALL") = {vect1[2],vect1[4], vect2[2],vect2[3], vect3[3]};
 
 
 Mesh.MshFileVersion = 2.2;
-
-
-
-
-
-
-
-
-
-
