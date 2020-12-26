@@ -6,6 +6,8 @@ Temporary repository for the 2020 course of Compressible Fluid Dynamics
 2. [Laminar and Turbulent Boundary Layer Over Flat Plate](FLAT_PLATE)
 3. [Pitching inviscid and viscous airfoil](PITCHING)
 4. [RAE2822 transonic airfoil](RAE2822)
+5. [de Laval Nozzle](NOZZLE)
+6. [Backward facing step](BFS)
 
 
 ## SOFTWARE
